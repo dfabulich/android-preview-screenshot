@@ -43,7 +43,8 @@ class PreviewScreenshotGradlePluginTest {
   @get:Rule val mockitoJUnitRule: MockitoRule = MockitoJUnit.rule()
   @Mock(answer = Answers.RETURNS_DEEP_STUBS) lateinit var mockProject: Project
   @Mock(answer = Answers.RETURNS_DEEP_STUBS) lateinit var mockAndroidPlugin: AndroidComponentsExtension<*, *, *>
-  @Mock(answer = Answers.RETURNS_DEEP_STUBS) lateinit var mockCommonExtension: CommonExtension
+  @Suppress("RAW_TYPE_USAGE")
+  @Mock(answer = Answers.RETURNS_DEEP_STUBS) lateinit var mockCommonExtension: CommonExtension<*, *, *, *, *, *>
 
   @Before
   fun setupMocks() {

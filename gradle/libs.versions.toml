@@ -1,0 +1,36 @@
+[versions]
+agp = "8.7.2"
+junit = "4.13.2"
+junitPlatform = "1.10.2"
+truth = "1.4.4"
+kotlin = "1.9.24"
+mockito = "5.14.0"
+mockitoKotlin = "5.4.0"
+guava = "33.3.1-jre"
+
+[libraries]
+# AGP (for plugin API when building standalone)
+agp-gradle = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
+
+# JUnit
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+junit-platform-commons = { group = "org.junit.platform", name = "junit-platform-commons", version.ref = "junitPlatform" }
+junit-platform-engine = { group = "org.junit.platform", name = "junit-platform-engine", version.ref = "junitPlatform" }
+junit-platform-reporting = { group = "org.junit.platform", name = "junit-platform-reporting", version.ref = "junitPlatform" }
+
+# Truth
+truth = { group = "com.google.truth", name = "truth", version.ref = "truth" }
+
+# Kotlin
+kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
+kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test-junit", version.ref = "kotlin" }
+
+# Mockito
+mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
+mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockitoKotlin" }
+
+# Guava (for report renderers)
+guava = { group = "com.google.guava", name = "guava", version.ref = "guava" }
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

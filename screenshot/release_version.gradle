@@ -17,14 +17,26 @@
 if (findProperty('hybrid-build-embedded-in-bazel')?.toBoolean()) {
     version = getProperty('SCREENSHOT_TEST_PLUGIN_VERSION')
 } else {
-    Properties properties = new Properties()
-    File versionRootDir = rootDir
-    String relativeVersionPath = 'base/preview/screenshot/release_version.bzl'
-    File versionProperties = new File(versionRootDir, relativeVersionPath)
-    versionProperties.withReader { properties.load(it) }
-    if (findProperty('release')?.toBoolean()) {
-        version = properties.getProperty('SCREENSHOT_TEST_PLUGIN_VERSION_RELEASE').replaceAll('"', '')
+    // Standalone build: try root gradle.properties, then screenshot/release_version.bzl
+    def versionFromRoot = rootProject.findProperty('screenshotPluginVersion')
+    if (versionFromRoot != null) {
+        version = versionFromRoot
     } else {
-        version = properties.getProperty('SCREENSHOT_TEST_PLUGIN_VERSION_DEV').replaceAll('"', '')
+        File versionRootDir = rootDir
+        def relativePaths = ['base/preview/screenshot/release_version.bzl', 'screenshot/release_version.bzl']
+        File versionFile = relativePaths.findResult { path ->
+            def f = new File(versionRootDir, path)
+            f.exists() ? f : null
+        }
+        if (versionFile != null && versionFile.exists()) {
+            def text = versionFile.text
+            def releaseMatch = (text =~ /SCREENSHOT_TEST_PLUGIN_VERSION_RELEASE\s*=\s*"([^"]+)"/)
+            def devMatch = (text =~ /SCREENSHOT_TEST_PLUGIN_VERSION_DEV\s*=\s*"([^"]+)"/)
+            version = findProperty('release')?.toBoolean() && releaseMatch
+                ? releaseMatch[0][1]
+                : (devMatch ? devMatch[0][1] : '0.0.1-dev')
+        } else {
+            version = findProperty('release')?.toBoolean() ? '0.0.1-alpha14' : '0.0.1-dev'
+        }
     }
 }

@@ -13,17 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-apply plugin: 'com.android.tools.java-library'
-apply plugin: 'com.android.tools.kotlin'
-apply plugin: 'com.android.tools.publish'
 
-apply from: '../release_version.gradle'
+plugins {
+    kotlin("jvm") version "1.9.24"
+    `java-library`
+}
 
-group = 'com.android.tools.screenshot'
+apply(from = "../release_version.gradle")
 
-project.ext.pomName = 'screenshot-validation-api'
-project.ext.pomDesc = 'API for screenshot testing.'
+group = "com.android.tools.screenshot"
+version = project.version
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+kotlin {
+    jvmToolchain(17)
+}
 
 dependencies {
-    implementation libs.junit_platform_commons
+    implementation(libs.junit.platform.commons)
 }

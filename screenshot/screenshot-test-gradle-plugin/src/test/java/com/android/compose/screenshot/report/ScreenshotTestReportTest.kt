@@ -16,7 +16,6 @@
 
 package com.android.compose.screenshot.report
 
-import com.android.testutils.truth.PathSubject.assertThat
 import com.google.common.io.Files
 import com.google.common.truth.Truth.assertThat
 import java.awt.Color
@@ -60,7 +59,7 @@ class ScreenshotTestReportTest {
 
     val expectedIndexFileContentExcludingFooter = javaClass.getResourceAsStream("index.txt")!!.readBytes().toString(Charsets.UTF_8)
     val indexHtml = File(reportOutDir, "index.html")
-    assertThat(indexHtml).exists()
+    assertThat(indexHtml.exists()).isTrue()
     run checkIndexHtml@{
       indexHtml.readLines().forEachIndexed { index, line ->
         if (line.contains("footer")) return@checkIndexHtml // Ignore the footer from the generated report
@@ -70,7 +69,7 @@ class ScreenshotTestReportTest {
 
     val expectedModuleFileContentExcludingFooter = javaClass.getResourceAsStream("module.txt")!!.readBytes().toString(Charsets.UTF_8)
     val moduleHtml = File(reportOutDir, "com.example.myapplication.html")
-    assertThat(moduleHtml).exists()
+    assertThat(moduleHtml.exists()).isTrue()
     run checkModuleHtml@{
       moduleHtml.readLines().forEachIndexed { index, line ->
         if (line.contains("footer")) return@checkModuleHtml // Ignore the footer from the generated report
@@ -92,7 +91,7 @@ class ScreenshotTestReportTest {
         .lines()
         .joinToString(System.lineSeparator())
     val classHtml = File(reportOutDir, "com.example.myapplication.ExampleInstrumentedTest.html")
-    assertThat(classHtml).exists()
+    assertThat(classHtml.exists()).isTrue()
     assertThat(classHtml.readText().substringBefore("<div id=\"footer\">")).isEqualTo(expected)
   }
 
@@ -103,7 +102,7 @@ class ScreenshotTestReportTest {
 
     val expectedIndexFileContentExcludingFooter = javaClass.getResourceAsStream("indexError.txt")!!.readBytes().toString(Charsets.UTF_8)
     val indexHtml = File(reportOutDir, "index.html")
-    assertThat(indexHtml).exists()
+    assertThat(indexHtml.exists()).isTrue()
     run checkIndexHtml@{
       indexHtml.readLines().forEachIndexed { index, line ->
         if (line.contains("footer")) return@checkIndexHtml // Ignore the footer from the generated report
@@ -127,10 +126,10 @@ class ScreenshotTestReportTest {
     TestReport(resultsOutDir, reportOutDir).generateScreenshotTestReport()
 
     val indexHtml = File(reportOutDir, "index.html")
-    assertThat(indexHtml).exists()
+    assertThat(indexHtml.exists()).isTrue()
 
     val packageHtml = File(reportOutDir, ".html")
-    assertThat(packageHtml).doesNotExist()
+    assertThat(packageHtml.exists()).isFalse()
   }
 
   private fun createTempImageFile(dir: File, name: String): File {
