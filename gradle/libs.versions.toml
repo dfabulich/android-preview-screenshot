@@ -1,7 +1,8 @@
 [versions]
 agp = "8.7.2"
+asm = "9.7"
 junit = "4.13.2"
-junitPlatform = "1.10.2"
+junitPlatform = "1.11.4"
 truth = "1.4.4"
 kotlin = "1.9.24"
 mockito = "5.14.0"
@@ -17,6 +18,7 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 junit-platform-commons = { group = "org.junit.platform", name = "junit-platform-commons", version.ref = "junitPlatform" }
 junit-platform-engine = { group = "org.junit.platform", name = "junit-platform-engine", version.ref = "junitPlatform" }
 junit-platform-reporting = { group = "org.junit.platform", name = "junit-platform-reporting", version.ref = "junitPlatform" }
+junit-platform-launcher = { group = "org.junit.platform", name = "junit-platform-launcher", version.ref = "junitPlatform" }
 
 # Truth
 truth = { group = "com.google.truth", name = "truth", version.ref = "truth" }
@@ -31,6 +33,9 @@ mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", versio
 
 # Guava (for report renderers)
 guava = { group = "com.google.guava", name = "guava", version.ref = "guava" }
+
+# ASM (for PreviewAnnotationDescriptor)
+asm = { group = "org.ow2.asm", name = "asm", version.ref = "asm" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

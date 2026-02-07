@@ -18,7 +18,6 @@ package com.android.tools.screenshot.xml
 
 import com.android.tools.screenshot.PreviewScreenshotTestEngineInput.XmlReportInput
 import org.junit.platform.engine.TestExecutionResult
-import org.junit.platform.engine.reporting.FileEntry
 import org.junit.platform.engine.reporting.ReportEntry
 import org.junit.platform.launcher.TestExecutionListener
 import org.junit.platform.launcher.TestIdentifier
@@ -61,8 +60,5 @@ class XmlReportGeneratingListener : TestExecutionListener {
   override fun reportingEntryPublished(testIdentifier: TestIdentifier, entry: ReportEntry) {
     delegate.reportingEntryPublished(testIdentifier, entry)
   }
-
-  override fun fileEntryPublished(testIdentifier: TestIdentifier, file: FileEntry) {
-    delegate.fileEntryPublished(testIdentifier, file)
-  }
+  // fileEntryPublished(TestIdentifier, FileEntry) exists only in JUnit Platform 2.x; omit override for 1.x
 }

@@ -6,9 +6,10 @@ This directory can be built **without** the full Android/tools/base monorepo.
 
 - **screenshot-test-gradle-plugin** – The Gradle plugin for Compose Preview screenshot testing. Builds and tests.
 - **screenshot-validation-api** – API library for screenshot testing. Builds.
+- **screenshot-validation-junit-engine** – JUnit 5 test engine that runs screenshot tests and uses the renderer. Builds against `com.android.tools.compose:compose-preview-renderer` from Maven (same version as `screenshotPluginVersion`). Uses Kotlin 2.1 so it can read the renderer JAR’s metadata. When the fork is consumed via `includeBuild`, this engine is used instead of the published one so you can apply fixes (e.g. add kotlin-reflect to the renderer classpath).
 - **screenshot:standalone-stubs** – Stub implementations for `com.android.utils.FileUtils`, `com.android.SdkConstants`, `com.android.tools.analytics.CommonMetricsData`, and analytics protos. Used only at compile time; at runtime the plugin runs inside a project that has the real AGP and tools on the classpath.
 
-**screenshot-validation-junit-engine** is *not* included in the standalone build. It depends on `compose-preview-detector` and `compose-preview-renderer`, which are built from the full repo. To work on the junit-engine you need the full tree.
+Note: **compose-preview-detector** is not published to Maven; the engine does not depend on it. The renderer JAR is sufficient for the engine to compile and run.
 
 ## Requirements
 

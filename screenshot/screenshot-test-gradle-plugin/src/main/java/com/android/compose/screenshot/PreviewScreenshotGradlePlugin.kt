@@ -83,6 +83,7 @@ class PreviewScreenshotGradlePlugin : Plugin<Project> {
     const val MIN_VALIDATION_ENGINE_VERSION = "0.0.1-alpha03"
 
     private const val LAYOUTLIB_VERSION = "16.1.0-jdk17"
+    private const val JUNIT_PLATFORM_VERSION = "1.11.4"
 
     val SCREENSHOT_TEST_PLUGIN_VERSION: String by lazy {
       requireNotNull(PreviewScreenshotGradlePlugin::class.java.getResourceAsStream("/com-android-compose-screenshot.properties"))
@@ -398,7 +399,7 @@ class PreviewScreenshotGradlePlugin : Plugin<Project> {
         description = "A configuration to resolve screenshot test engine dependencies."
       }
 
-      dependencies.add(previewScreenshotTestEngineConfigurationName, "org.junit.platform:junit-platform-launcher")
+      dependencies.add(previewScreenshotTestEngineConfigurationName, "org.junit.platform:junit-platform-launcher:$JUNIT_PLATFORM_VERSION")
       dependencies.add(
         previewScreenshotTestEngineConfigurationName,
         "com.android.tools.screenshot:screenshot-validation-junit-engine:${validationEngineVersion}",
@@ -417,9 +418,9 @@ class PreviewScreenshotGradlePlugin : Plugin<Project> {
       }
       dependencies.add(layoutlibJarConfigurationName, "com.android.tools.layoutlib:layoutlib:$LAYOUTLIB_VERSION")
 
-      // Standalone renderer version is the same as plugin version.
-      val standaloneRendererVersion = SCREENSHOT_TEST_PLUGIN_VERSION
-      dependencies.add(layoutlibJarConfigurationName, "com.android.tools.compose:compose-preview-renderer:$standaloneRendererVersion")
+      // Renderer is not built in this repo; use screenshotRendererVersion so it resolves from Maven.
+      val rendererVersion = project.findProperty("screenshotRendererVersion") as String? ?: "0.0.1-alpha13"
+      dependencies.add(layoutlibJarConfigurationName, "com.android.tools.compose:compose-preview-renderer:$rendererVersion")
     }
   }
 
